@@ -11,16 +11,36 @@ import {
 import "../index.css";
 
 export const Signup = (props) => {
+
+    const signUserUp = (newUserObject) => {
+        fetch("http://localhost:3001/api/v1/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Accept': "application/json",
+          },
+          body: JSON.stringify(newUserObject),
+        })
+          .then((res) => res.json())
+          .then((userResponse) => {
+            if (userResponse !== null) {
+                props.dispatch({ type: "SIGNED UP", payload: userResponse });
+              }
+          });
+      };
     // 
   function responseFacebook(res) {
+    //   console.log(res)
     let newUser = {
       firstName: res.name.split(" ")[0],
       lastName: res.name.split(" ")[1],
+      password: res.userID.toString(),
       email: res.email,
       profilePicture: res.picture.data.url,
-      facebookId: res.id,
+    //   facebookId: res.userID,
     };
-    props.dispatch({ type: "SIGNED UP", payload: newUser });
+    // console.log(newUser)
+    signUserUp(newUser)
   }
 
   function responseGoogle(res) {
@@ -28,10 +48,12 @@ export const Signup = (props) => {
       firstName: res.profileObj.givenName,
       lastName: res.profileObj.familyName,
       email: res.profileObj.email,
+      password: res.profileObj.googleId.toString(),
       profilePicture: res.profileObj.imageUrl,
-      googleId: res.profileObj.googleId,
+    //   googleId: res.profileObj.googleId,
     };
-    props.dispatch({ type: "SIGNED UP", payload: newUser });
+    // console.log(newUser)
+    signUserUp(newUser)
   }
   //
   const submitHandler = (e) => {
@@ -44,7 +66,7 @@ export const Signup = (props) => {
       profilePicture: e.target[5].value,
     };
 
-    props.dispatch({ type: "SIGNED UP", payload: newUser });
+    signUserUp(newUser)
   };
   //
   return (
