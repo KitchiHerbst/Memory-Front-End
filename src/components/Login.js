@@ -1,17 +1,47 @@
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import "../index.css";
 
-function responseFacebook(res) {
-  console.log(res);
-}
-
-function responseGoogle(res) {
-  console.log(res.profileObj);
-}
-
 export const Login = (props) => {
+  //function to take in a user object from all three methods of loggin in and
+  //   making a call to the api to get the user and set the local token to that users ID
+  const fetchAndDispatch = (user) => {
+    fetch("http://localhost:3001/api/v1/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((userData) => {
+        localStorage.token = userData.token
+          props.dispatch({ type: "LOGIN" })
+      });
+  };
+  //functions to handle all three ways of loggin in and creating a user object for the above function
+  function responseFacebook(res) {
+    let user = {
+      email: res.email,
+      password: res.userID.toString(),
+    };
+    fetchAndDispatch(user);
+  }
+
+  function responseGoogle(res) {
+    let user = {
+      email: res.profileObj.email,
+      password: res.profileObj.googleId.toString(),
+    };
+    fetchAndDispatch(user);
+  }
+
+  function responseManual() {}
+
+  //
+
   return (
     <div className="login-signup" id="login-card">
       <FacebookLogin
@@ -29,12 +59,14 @@ export const Login = (props) => {
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         // cookiePolicy={"single-host-origin"}
-        className='btnGoogle-login'
+        className="btnGoogle-login"
       />
       <br />
       <p>
         You new around these parts? <Link to="/signup">Sign up here</Link>
       </p>
+      {props.redirect ? <Redirect to="/home" /> : null}
     </div>
+
   );
 };

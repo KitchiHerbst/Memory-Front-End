@@ -1,4 +1,4 @@
-import React, { Component, useReducer, useState } from "react";
+import React, { Component, useEffect, useReducer, useState } from "react";
 import { Login } from "./components/Login.js";
 import { Signup } from "./components/Signup.js";
 import { Home } from "./components/Home.js";
@@ -12,7 +12,7 @@ export function App() {
 
   
 
-  const reducer = (state = initialState, action) => {
+  const userReducer = (state = initialState, action) => {
     switch (action.type) {
       case "LOGIN":
         return { loggedIn: true };
@@ -25,29 +25,43 @@ export function App() {
     }
   };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const loginUser = () => {
-    dispatch({ type: "LOGIN" });
-  };
-
-  const logout = () => {
-    dispatch({ type: "LOGOUT" });
-  };
+  const [state, dispatchUser] = useReducer(userReducer, initialState);
+  const [userTimeline, setUserTimeline] = useState(null)
+  
 
   
+
+  // const logout = () => {
+  //   dispatch({ type: "LOGOUT" });
+  // };
+
+  const getUserTimeline = () => {
+    fetch("http://localhost:3001/api/v1/user_timeline", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((timeline) => setUserTimeline(timeline));
+  }
+  
+  useEffect(() =>{getUserTimeline()}, initialState.loggedIn)
+
   return (
     <div>
       <Router>
         <Switch>
           <Route path="/home">
-            <Home />
+            <Home timeline={userTimeline}/>
           </Route>
           <Route path="/signup">
-            <Signup redirect={state.loggedIn} dispatch={dispatch} />
+            <Signup redirect={state.loggedIn} dispatch={dispatchUser} />
           </Route>
           <Route exact path="/">
-            <Login />
+            <Login redirect={state.loggedIn} dispatch={dispatchUser}/>
           </Route>
         </Switch>
       </Router>

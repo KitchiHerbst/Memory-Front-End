@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
+import {CreateTimeline} from ".././functions/CreateTimeline"
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,9 +25,12 @@ export const Signup = (props) => {
           .then((res) => res.json())
           .then((userResponse) => {
             if (userResponse !== null) {
+                localStorage.token = userResponse.token
                 props.dispatch({ type: "SIGNED UP", payload: userResponse });
+                CreateTimeline(userResponse.token)
               }
           });
+
       };
     // 
   function responseFacebook(res) {
