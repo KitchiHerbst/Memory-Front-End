@@ -10,7 +10,7 @@ import { UsersIndex} from "./components/UsersIndex"
 import "./index.css";
 
 export function App() {
-  
+
   const initialState = {
     loggedIn: false,
   };
@@ -82,7 +82,7 @@ export function App() {
      fetchUsers()
     fetchFriends()}, initialState.loggedIn)
 
-  console.log(state)
+  console.log(state.loggedIn)
   return (
     <div>
       <Router>
