@@ -2,10 +2,14 @@ import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import "../index.css";
+import React, {useState} from 'react'
 
 export const Login = (props) => {
+
+  const [manualLogin, setManualLogin] = useState(false)
   //function to take in a user object from all three methods of loggin in and
   //   making a call to the api to get the user and set the local token to that users ID
+
   const fetchAndDispatch = (user) => {
     fetch("http://localhost:3001/api/v1/login", {
       method: "POST",
@@ -38,7 +42,14 @@ export const Login = (props) => {
     fetchAndDispatch(user);
   }
 
-  function responseManual() {}
+  function responseManual(e) {
+    e.preventDefault()
+    let user ={
+      email: e.target[0].value,
+      password: e.target[1].value
+    }
+    fetchAndDispatch(user)
+  }
 
   //
 
@@ -62,6 +73,14 @@ export const Login = (props) => {
         className="btnGoogle-login"
       />
       <br />
+      <button onClick={() => setManualLogin(!manualLogin)}>Manual Login</button>
+      {manualLogin ? 
+      <form onSubmit={responseManual}>
+        <input placeholder='Email' type='text'/><br/>
+        <input placeholder='Password' type='password'/><br/>
+        <input type='submit'/>
+      </form>
+      : null}
       <p>
         You new around these parts? <Link to="/signup">Sign up here</Link>
       </p>

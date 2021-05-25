@@ -19,9 +19,6 @@ export const NavBar = (props) => {
                 <Link to="/friendslist">Friends</Link>
               </li>
               <li>
-                <Link to="/friendpage">Friend page</Link>
-              </li>
-              <li>
                   <Link to='/people'>Find Friends</Link>
               </li>
             </ul>

@@ -1,9 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, useLocation } from "react-router-dom";
+import {Timeline} from './Timeline'
+
 
 export const FriendPage = (props) => {
     const [postForm, setPostForm] = useState(false)
-    const [friend, setFriend] = useState(null)
+    const [timeline, setTimeline] = useState({})
     const [posts, setPosts] = useState([])
+    const location = useLocation()
+    const {friend} = location.state
 
 
     const submitHandler = (e) => {
@@ -12,8 +17,9 @@ export const FriendPage = (props) => {
             date: e.target[0].value, 
             picture: e.target[1].value,
             text:e.target[2].value,
-            timelineId: null
+            timelineId: timeline.id
         }
+        setPosts([...posts, post])
         console.log(post)
         fetch('http://localhost:3001/api/v1/posts', {
             method: 'POST',
@@ -27,11 +33,23 @@ export const FriendPage = (props) => {
         .then(res => res.json())
         .then(createdPost => console.log(createdPost))
     
-      } 
+    } 
 
+    useEffect(() => {
+      fetch(`http://localhost:3001/api/v1/friend_timeline/${friend.id}`,)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setTimeline(data.timeline)
+        setPosts(data.posts)
+      })
+    },friend)
+
+    console.log(friend, timeline)
+    console.log(posts)
   return (
     <div>
-      <h1>This is friend page</h1>
+      <h1>This is {friend.first_name}s page</h1>
       <button id="add-post" onClick={() => setPostForm(!postForm)}>
         Write a Post
       </button>
@@ -50,6 +68,8 @@ export const FriendPage = (props) => {
           <input type="submit" className="btn" />
         </form>
       )}
+      <Timeline timeline={timeline} posts={posts}/>
     </div>
+
   );
 };
