@@ -1,34 +1,30 @@
 import { useState, useEffect } from "react"
 import {UserCard } from './UserCard'
+import {deleteFriend} from '../functions/DeleteFriend'
+import { addFriend } from "../functions/AddFriend"
 
 export const UsersIndex = props => {
 
-    // const [users, setUsers] = useState([])
-
-    // useEffect(() =>{
-    //     fetch('http://localhost:3001/api/v1/users')
-    //     .then(res => res.json())
-    //     .then(userData => setUsers(userData))
-    // },props.redirect)
-
     const addFriendHandler = (user) => {
-        fetch('http://localhost:3001/api/v1/friendships', {
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${localStorage.token}`
-            },
-            body: JSON.stringify(user.id)
-        })
-        .then(res => res.json())
-        .then(response => console.log(response))
+        console.log(user)
+        props.setFriends([...props.friends, user])
+        props.setNotFriends(props.notFriends.filter(people => people.id !== user.id))
+        addFriend(user.id)
+       
     }
 
-    console.log(props.notFriends)
+    const removeFriendHandler = (user) => {
+        console.log(user)
+        props.setNotFriends([...props.notFriends, user])
+        props.setFriends(props.friends.filter(people => people.id !== user.id))
+        deleteFriend(user.id)
+    }
+    
     return(
         <div>
-            {props.users.map(user => <UserCard user={user} addButton={addFriendHandler}/>)}
+            <input type='text' onChange={(e) => props.search(e.target.value)} placeholder='Search'/>
+            {props.notFriends.map(person => <UserCard user={person} friendshipHandler={addFriendHandler} status={false}/>)}
+            {props.friends.map(person => <UserCard user={person} friendshipHandler={removeFriendHandler} status={true}/>)}
         </div>
     )
 }

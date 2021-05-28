@@ -4,23 +4,14 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 
 export const UserCard = (props) => {
 
+    
 
-    const addFriend = () => {
-        props.addButton(props.user)
-
-    }
-
-    // console.log(props.delete)
+    console.log(props.friendshipHandler)
     return(
         <div className='user-card'>
-            <h4>{props.user.first_name}</h4> 
-            {props.addButton !== undefined ?
-            <button onClick={() => addFriend()}>Add friend</button>
-            :
-            <Link to={{pathname: '/friendpage', state:{friend: props.user}}} className='btn'>See {props.user.first_name}s page</Link>
-            }
-            {props.delete !== undefined ? <button onClick={() => props.delete(props.user)}>Remove Friend</button> : null}
-            <h5>{props.user.email}</h5>
+            <h4>{props.user.first_name} {props.user.last_name}</h4> 
+            <Link to={{pathname: '/friendpage', state:{friend: props.user}}} className='btn'>See {props.user.first_name}s page</Link> <br/>
+            <button onClick={() => props.friendshipHandler(props.user)}>{props.status ? 'Remove Friend' : 'Add Friend'}</button><br></br>
             <img src={props.user.profile_picture}/>
         </div>
     )

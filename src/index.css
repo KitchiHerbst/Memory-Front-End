@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(165, 170, 170);
 }
 
 code {
@@ -12,10 +13,80 @@ code {
     monospace;
 }
 
-.login-signup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+.secondary-color {
+  background-color:burlywood ;
 }
+
+.primary-color {
+  background-color: rgb(165, 170, 170);
+}
+
+.border-test {
+  border: 1px black solid;
+}
+
+.profile-picture {
+  height: 300px;
+  width: 300px;
+}
+
+/* login CSS */
+.main-login-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+}
+
+/* .login-header {
+  justify-content: space-around;
+}
+
+.login-methods {
+  justify-content: space-around;
+  
+} */
+
+/* end of login CSS */
+
+
+
+/* timeline CSS */
+.timeline-container {
+  height: 800px;
+  width: 100%;
+
+}
+
+/* end of timeline CSS */
+
+/* Home CSS */
+
+.home-no-timeline {
+  display: flex;
+  justify-content: start;
+}
+
+.home-picture {
+  margin: 10px;
+
+}
+
+.home-user-info {
+  margin: 10px;
+  width: 300px;
+}
+
+.home-edit-form {
+  margin: 10px;
+  width: 300px;
+}
+
+.home {
+  min-height: 100vh;
+}
+
+
+/*  */

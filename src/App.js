@@ -41,31 +41,15 @@ export function App() {
 
 
   const [state, dispatchUser] = useReducer(userReducer, initialState);
-  // const [userTimeline, setUserTimeline] = useState(null)
   const [users, setUsers] = useState([])
+
+  // i wanted an array of all the original friends and not friends but also one to use as a display for the search bar
+  // probably can be much better but this works for now
   const [friends, setFriends] = useState([]) 
   const [notFriends, setNotFriends] = useState([])
+  const [filteredFriends, setFilteredFriends] = useState(friends)
+  const [filteredNotFriends, setFilteredNotFriends] = useState(notFriends)
   
-  // const logout = () => {
-  //   localStorage.clear()
-  // };
-
-
-  
-
-
-  // const getUserTimeline = () => {
-  //   fetch("http://localhost:3001/api/v1/user_timeline", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //       Authorization: `Bearer ${localStorage.token}`,
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((timeline) => setUserTimeline(timeline));
-  // }
 
   const fetchUsers = () => {
     fetch('http://localhost:3001/api/v1/users',{
@@ -80,6 +64,7 @@ export function App() {
     .then(userData => setUsers(userData)) 
   }
 
+  //getting all of the users friends and the people that arent their friends
   const fetchFriends = () => {
     fetch('http://localhost:3001/api/v1/friendships', {
       method: 'GET',
@@ -90,42 +75,39 @@ export function App() {
       }
     })
     .then(res => res.json())
-    .then(usersFriends => setFriends(usersFriends))
+    .then(data => {
+      setFriends(data.friends)
+      setFilteredFriends(data.friends)
+      setNotFriends(data.not_friends)
+      setFilteredNotFriends(data.not_friends)
+    })
   }
 
-  function arrayDiffByKey(key, ...arrays) {
-    return [].concat(...arrays.map( (arr, i) => {
-        const others = arrays.slice(0);
-        others.splice(i, 1);
-        const unique = [...new Set([].concat(...others))];
-        return arr.filter( x =>
-            !unique.some(y => x[key] === y[key])
-        );
-    }));
-}
-
   
-  
-  //getting all the data we need for our state hooks dependent on if loggedIn is changed
+  //getting all the users, friends and not friends dependent on if loggedIn is changed
   useEffect(() =>{
      fetchUsers()
     fetchFriends()
-    }, initialState.loggedIn)
+    }, state.loggedIn)
 
+// setting filtered friends and notFriends depending on if either of the original arrays change
+    useEffect(() => {
+      setFilteredNotFriends(notFriends)
+      setFilteredFriends(friends)
+    }, [friends, notFriends])
 
+    //takes in a string and matches users first name, want to get this to work no matter the casing, also want to check last names as well
+    // maybe    ...   || person.last_name.includes(arg)
+    const searchedUsers = (arg) => {
+      // console.log(arg)
+      setFilteredFriends(friends.filter(person => person.first_name.includes(arg) || person.last_name.includes(arg)))
+      setFilteredNotFriends(notFriends.filter(person => person.first_name.includes(arg) || person.last_name.includes(arg)))
+    }
 
-
-  useEffect(() => {
-    // setNotFriends(users.filter(person => !friends.includes(person)) ) 
-    // setNotFriends(difference(users,friends))
-  }, friends && users)
-
-  console.log(notFriends)
-  console.log(friends)
-  console.log(users)
+ 
   // debugger
   return (
-    <div>
+    <div id='App' >
       <Router>
         {state.loggedIn ? <NavBar /> : null}
         <Switch>
@@ -145,7 +127,8 @@ export function App() {
             <FriendsList redirect={state.loggedIn} dispatch={dispatchUser} friends={friends} setFriends={setFriends}/>
           </Route>
           <Route exact path="/people">
-            <UsersIndex redirect={state.loggedIn} dispatch={dispatchUser} users={users} friends={friends} notFriends={notFriends}/>
+            <UsersIndex redirect={state.loggedIn} dispatch={dispatchUser} friends={filteredFriends} notFriends={filteredNotFriends} 
+            search={searchedUsers} setFriends={setFriends} setNotFriends={setNotFriends}/>
           </Route>
         </Switch>
       </Router>
