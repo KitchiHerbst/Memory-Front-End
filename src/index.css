@@ -13,7 +13,12 @@ code {
     monospace;
 }
 
-.login-dark {
+.container-main {
+  min-height: 100vh;
+  background-color: rgb(190, 194, 194);
+}
+
+/* .login-dark {
   max-width: 320px;
   width: 90%;
   background-color: #1e2833;
@@ -25,10 +30,10 @@ code {
   left: 50%;
   color: #fff;
   box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
-}
+} */
 
-.secondary-color {
-  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+.accent-color {
+  background-color: #1e2833 !important;
 }
 
 .nav--links {
@@ -40,18 +45,35 @@ code {
   height: 100%;
 }
 
+.login-card {
+  width: 20%;
+  background-color: #1e2833 !important; 
+  color: #fff;
+  padding: 10px;
+  box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
+  
+}
+
+.login-title {
+  font-size: 4em !important;
+}
+
+.login-prompt {
+  font-size: 1.5em !important;
+}
+
 .custom--navbar {
   background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
 
 }
 
 
-.primary-color {
+/* .primary-color {
   background-color: rgb(165, 170, 170);
-}
+} */
 
 .border-test {
-  border: 1px black solid;
+  border: 5px black solid !important;
 }
 
 .profile-picture {
@@ -61,14 +83,14 @@ code {
 }
 
 
-.main-login-div {
+/* .main-login-div {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
 
-}
+} */
 
 
 .timeline-container {

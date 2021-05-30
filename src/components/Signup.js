@@ -10,9 +10,9 @@ import {
   Redirect,
 } from "react-router-dom";
 import "../index.css";
+import { Button, Card, Collapse, Container, Form, Row } from "react-bootstrap";
 
 export const Signup = (props) => {
-
   const [manualSignup, setManualSignup] = useState(false);
 
   const signUserUp = (newUserObject) => {
@@ -75,77 +75,89 @@ export const Signup = (props) => {
   };
   //
   return (
-    <div className="main-login-div text-center">
-      <div className="login-header">
-        <h1 className="mt-4 mb-4">MEMORY</h1>
-        <h4 className="font-weight-normal mb-4">Sign up</h4>
-      </div>
-      <div className="login-methods">
-        <FacebookLogin
-          appId="743947922947098"
-          autoLoad={true}
-          fields="name,email,picture"
-          // onClick={componentClicked}
-          callback={responseFacebook}
-          textButton="Sign up with Facebook"
-          cssClass="btn btn-dark col-12 text-center"
-        />
-        <br />
-        <br />
-        <GoogleLogin
-          clientId="327256534475-ut4552bgs66c3g85p0dvbk2mrk1hgjim.apps.googleusercontent.com"
-          render={(renderProps) => (
-            <button
-              onClick={renderProps.onClick}
-              disabled={renderProps.disabled}
-              className="btn btn-dark col-12 text-center"
-            >
-              Sign up with Google
-            </button>
-          )}
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          // cookiePolicy={"single-host-origin"}
-          
-        />
-        <br />
-        <br />
-        <button onClick={() => setManualSignup(!manualSignup)} className='btn btn-secondary col-12 text-center'>Manual Signup</button>
-        <br />
-        <br />
-            {manualSignup ?
-        <form id="signup-form" onSubmit={submitHandler}>
-          <input id="first-name" type="text" placeholder="First Name" className='col-12'/>
-          <br />
-          <br />
-          <input id="last-name" type="text" placeholder="Last Name" className='col-12'/>
-          <br />
-          <br />
-          <input id="email" type="text" placeholder="Email" className='col-12'/>
-          <br />
-          <br />
-          <input id="password" type="password" placeholder="Password" className='col-12'/>
-          <br />
-          <br />
-          <input
-            id="confirm-password"
-            type="password"
-            placeholder="Confirm Password"
-            className='col-12'
-          />
-          <br />
-          <br />
-          <input id="profile-picture" type="text" placeholder="Photo URL" className='col-12'/>
-          <br />
-          <br />
-          <button id="signup-button" className='btn btn-secondary col-12'>Create Account</button>
-        </form>
-        : null }
-        <p>
-          Change your mind? <Link to="/"> Return to Login </Link>
-        </p>
-        {props.redirect ? <Redirect to="/home" /> : null}
-      </div>
-    </div>
+    <Container fluid>
+      <Row className="justify-content-center align-items-center container-main">
+        <Card className="login-card text-center">
+          <Card.Body>
+            <Card.Title className="text-center login-title mt-4 mb-4">
+              MEMORY
+            </Card.Title>
+            <Card.Subtitle className="text-center login-prompt mb-4">
+              Signup Here
+            </Card.Subtitle>
+            <Card.Text>
+              <FacebookLogin
+                appId="743947922947098"
+                autoLoad={true}
+                fields="name,email,picture"
+                // onClick={componentClicked}
+                callback={responseFacebook}
+                textButton="Sign up with Facebook"
+                cssClass="btn btn-light col-12 mb-4"
+              />
+
+              <GoogleLogin
+                clientId="327256534475-ut4552bgs66c3g85p0dvbk2mrk1hgjim.apps.googleusercontent.com"
+                render={(renderProps) => (
+                  <button
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    className="btn btn-light col-12 mb-4"
+                  >
+                    Sign up with Google
+                  </button>
+                )}
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                // cookiePolicy={"single-host-origin"}
+              />
+              <Button
+                onClick={() => setManualSignup(!manualSignup)}
+                className="btn btn-light col-12 mb-4"
+              >
+                Manual Signup
+              </Button>
+                <Collapse in={manualSignup}>
+                  <Form>
+                    <Form.Group controlId="firstname">
+                      <Form.Control type="text" placeholder="First Name" />
+                    </Form.Group>
+
+                    <Form.Group controlId="lastname">
+                      <Form.Control type="text" placeholder="Last Name" />
+                    </Form.Group>
+                    <Form.Group controlId="email">
+                      <Form.Control type="email" placeholder="Email" />
+                    </Form.Group>
+
+                    <Form.Group controlId="password">
+                      <Form.Control type="password" placeholder="Password" />
+                    </Form.Group>
+                    <Form.Group controlId="confirmpassword">
+                      <Form.Control
+                        type="password"
+                        placeholder="Confirm Password"
+                      />
+                    </Form.Group>
+
+                    <Form.Group controlId="profilepicture">
+                      <Form.Control type="text" placeholder="Profile Picture" />
+                    </Form.Group>
+                    <Button
+                      variant="light"
+                      type="submit"
+                      className="btn-block mt-4 mb-4"
+                    >
+                      Submit
+                    </Button>
+                  </Form>
+                </Collapse>
+              <Link to="/"> Return to Login </Link>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </Row>
+      {props.redirect ? <Redirect to="/home" /> : null}
+    </Container>
   );
 };
