@@ -3,6 +3,7 @@ import GoogleLogin from "react-google-login";
 import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
 import "../index.css";
 import React, { useState } from "react";
+import { CardColumns, Container, Row } from "react-bootstrap";
 
 export const Login = (props) => {
   const [manualLogin, setManualLogin] = useState(false);
@@ -20,6 +21,7 @@ export const Login = (props) => {
     })
       .then((res) => res.json())
       .then((userData) => {
+        console.log(userData)
         localStorage.token = userData.token;
         props.dispatch({ type: "LOGIN" });
       });
@@ -54,60 +56,67 @@ export const Login = (props) => {
   
 
   return (
-    <div className="main-login-div text-center">
-      <div className="login-header" >
-        <h1 className="mt-4 mb-4">MEMORY</h1>
-        <h4 className="font-weight-normal mb-4">Please Login</h4>
-      </div>
-      <div className='login-methods'>
-        <FacebookLogin
-          appId="743947922947098"
-          autoLoad={true}
-          fields="name,email,picture"
-          // onClick={componentClicked}
-          callback={responseFacebook}
-          cssClass="btn btn-primary col-12 text-center"
-        />
-            <br />
-        <br />
-        <GoogleLogin
-          clientId="327256534475-ut4552bgs66c3g85p0dvbk2mrk1hgjim.apps.googleusercontent.com"
-          render={renderProps => (
-            <button onClick={renderProps.onClick} disabled={renderProps.disabled} className='btn btn-primary col-12 text-center'>Login with Google</button>
-          )}
-          buttonText="Login with Google"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          // cookiePolicy={"single-host-origin"}
+    // <div className="main-login-div text-center">
+    //   <section className='login-dark'>
+    //   <div className="login-header" >
+    //     <h1 className="mt-4 mb-4">MEMORY</h1>
+    //     <h4 className="font-weight-normal mb-4">Please Login</h4>
+    //   </div>
+    //   <div className='login-methods'>
+    //     <FacebookLogin
+    //       appId="743947922947098"
+    //       autoLoad={true}
+    //       fields="name,email,picture"
+    //       // onClick={componentClicked}
+    //       callback={responseFacebook}
+    //       cssClass="btn btn-dark col-12 text-center"
+    //     />
+    //         <br />
+    //     <br />
+    //     <GoogleLogin
+    //       clientId="327256534475-ut4552bgs66c3g85p0dvbk2mrk1hgjim.apps.googleusercontent.com"
+    //       render={renderProps => (
+    //         <button onClick={renderProps.onClick} disabled={renderProps.disabled} className='btn btn-dark col-12 text-center'>Login with Google</button>
+    //       )}
+    //       buttonText="Login with Google"
+    //       onSuccess={responseGoogle}
+    //       onFailure={responseGoogle}
+    //       // cookiePolicy={"single-host-origin"}
           
-        />
-            <br />
-        <br />
-        <button
-          className="btn btn-secondary col-12 text-center"
-          onClick={() => setManualLogin(!manualLogin)}
-        >
-          Manual Login
-        </button>
-        <br />
-        <br />
-        {manualLogin ? (
-          <form onSubmit={(e) => responseManual(e)}>
-            <input placeholder="Email" type="text" className='col-12'/>
-            <br />
-            <br />
-            <input placeholder="Password" type="password" className='col-12'/>
-            <br />
-            <br />
-            {/* <input type="submit" /> */}
-            <button className="btn btn-secondary col-12 text-center">Login</button>
-          </form>
-        ) : null}
-        <p>
-          New around these parts? <Link to="/signup">Sign up here</Link>
-        </p>
-        {props.redirect ? <Redirect to="/home" /> : null}
-      </div>
-    </div>
+    //     />
+    //         <br />
+    //     <br />
+    //     <button
+    //       className="btn btn-secondary col-12 text-center"
+    //       onClick={() => setManualLogin(!manualLogin)}
+    //     >
+    //       Manual Login
+    //     </button>
+    //     <br />
+    //     <br />
+    //     {manualLogin ? (
+    //       <form onSubmit={(e) => responseManual(e)}>
+    //         <input placeholder="Email" type="text" className='col-12'/>
+    //         <br />
+    //         <br />
+    //         <input placeholder="Password" type="password" className='col-12'/>
+    //         <br />
+    //         <br />
+    //         {/* <input type="submit" /> */}
+    //         <button className="btn btn-secondary col-12 text-center">Login</button>
+    //       </form>
+    //     ) : null}
+    //     <p>
+    //       New around these parts? <Link to="/signup">Sign up here</Link>
+    //     </p>
+    //     {props.redirect ? <Redirect to="/home" /> : null}
+    //   </div>
+    //   </section>
+    // </div>
+    <Container fluid>
+      <Row>
+        <CardColumns className='border-test'>LOGIN</CardColumns>
+      </Row>
+    </Container>
   );
 };

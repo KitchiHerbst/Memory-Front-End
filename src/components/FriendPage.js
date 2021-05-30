@@ -49,28 +49,41 @@ export const FriendPage = (props) => {
   }, friend);
 
   return (
-    <div>
-      <div className="mb-4">
-        <h1>This is {friend.first_name}s page</h1>
-        <button id="add-post" onClick={() => setPostForm(!postForm)}>
-          Write a Post
+    <div className='friend-page'>
+      <div className="mb-4 friend-page-no-timeline">
+      <div class=" friend-picture">
+          <img
+            src={friend.profile_picture}
+            alt="profile picture"
+            className="profile-picture"
+          />
+        </div>
+        <div className='friend-info'>
+        <h5>{friend.first_name} {friend.last_name}</h5>
+        <br/>
+        <button id="add-post" onClick={() => setPostForm(!postForm)} className='btn btn-dark col-8'>
+          Post to {friend.first_name}'s Timeline
         </button>
+        <div  className='post-form'>
         {!postForm ? null : (
           <form onSubmit={submitHandler}>
-            <input type="date" />
+            <input type="date" className='col-9'/>
             <br></br>
-            <input type="text" placeholder="Location" /> <br />
-            <input type="text" placeholder="Picture" /> <br />
+            <input type="text" placeholder="Location" className='col-9'/> <br />
+            <input type="text" placeholder="Picture" className='col-9'/> <br />
             <textarea
               name="paragraph_text"
               cols="25"
-              rows="30"
+              rows="10"
               placeholder="Today I went for a walk..."
+              className='col-9'
             />
             <br />
-            <input type="submit" className="btn" />
+            <input type="submit" className="btn btn-dark col-9" />
           </form>
         )}
+        </div>
+        </div>
       </div>
 
       <div className="mt-4 mb-4">

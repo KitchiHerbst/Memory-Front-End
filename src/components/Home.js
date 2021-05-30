@@ -77,9 +77,8 @@ export const Home = (props) => {
   console.log(posts);
   return (
     <div className="home">
-      <div className="home-no-timeline border-test">
-
-        <div class="border-test home-picture">
+      <div className="home-no-timeline ">
+        <div class=" home-picture">
           <img
             src={user.profile_picture}
             alt="profile picture"
@@ -87,11 +86,13 @@ export const Home = (props) => {
           />
         </div>
 
-        <div className="home-user-info border-test">
+        <div className="home-user-info ">
           <h5 class="card-title">
             {user.first_name} {user.last_name}
           </h5>
           <p class="card-text">{user.email}</p>
+          <br />
+          <br />
           <button
             className="btn btn-warning col-12"
             onClick={() => {
@@ -101,14 +102,16 @@ export const Home = (props) => {
           >
             Logout
           </button>
-          <br /><br />
+          <br />
+          <br />
           <button
             className="btn btn-secondary col-12"
             onClick={() => setToggleEdit(!toggleEdit)}
           >
             Edit Account
           </button>
-          <br /><br />
+          <br />
+          <br />
           <button
             className="btn btn-danger col-12"
             onClick={() => deleteHandler()}
@@ -116,9 +119,10 @@ export const Home = (props) => {
             Delete Account
           </button>
         </div>
-        <div className="home-edit-form border-test">
+        <div className="home-edit-form ">
           {toggleEdit ? (
             <form onSubmit={(e) => editUserHandler(e)}>
+              <br />
               <input
                 type="text"
                 placeholder="First Name"
@@ -128,8 +132,9 @@ export const Home = (props) => {
                 }
                 className="col-12"
               />
-              <br /><br />
-              
+              <br />
+              <br />
+
               <input
                 type="text"
                 placeholder="Last Name"
@@ -139,8 +144,9 @@ export const Home = (props) => {
                 }
                 className="col-12"
               />
-              
-              <br /><br />
+
+              <br />
+              <br />
               <input
                 type="text"
                 placeholder="Email"
@@ -148,8 +154,9 @@ export const Home = (props) => {
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
                 className="col-12"
               />
-              <br /><br />
-              
+              <br />
+              <br />
+
               <input
                 type="text"
                 placeholder="Profile Picture"
@@ -159,8 +166,9 @@ export const Home = (props) => {
                 }
                 className="col-12"
               />
-              <br /><br />
-              
+              <br />
+              <br />
+
               <input type="submit" className="btn btn-secondary col-12" />
             </form>
           ) : null}
@@ -173,8 +181,9 @@ export const Home = (props) => {
             */}
         </div>
       </div>
+      <div className="mt-4 mb-4">
         <Timeline timeline={userTimeline} posts={posts} />
-     
+      </div>
       {!props.redirect ? <Redirect to="/" /> : null}
     </div>
   );

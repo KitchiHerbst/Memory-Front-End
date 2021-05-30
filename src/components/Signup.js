@@ -88,7 +88,7 @@ export const Signup = (props) => {
           // onClick={componentClicked}
           callback={responseFacebook}
           textButton="Sign up with Facebook"
-          cssClass="btn btn-primary col-12 text-center"
+          cssClass="btn btn-dark col-12 text-center"
         />
         <br />
         <br />
@@ -98,7 +98,7 @@ export const Signup = (props) => {
             <button
               onClick={renderProps.onClick}
               disabled={renderProps.disabled}
-              className="btn btn-primary col-12 text-center"
+              className="btn btn-dark col-12 text-center"
             >
               Sign up with Google
             </button>

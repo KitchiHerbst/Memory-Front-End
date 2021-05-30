@@ -26,9 +26,9 @@ export const Timeline = (props) => {
     console.log(array)
 
   return (
-    <div className="mt-4 timeline-container border-test" >
+    <div className="mt-4 timeline-container" >
       {array !== [] ? 
-      <Chrono items={array} mode='HORIZONTAL' cardPositionHorizontal="TOP" disableNavOnKey='true' allowDynamicUpdate='true'/>
+      <Chrono items={array} mode='HORIZONTAL' cardPositionHorizontal="TOP" disableNavOnKey='true' allowDynamicUpdate='true' theme={{primary: "black", secondary: "white"}}/>
         : null}
     </div>
   );

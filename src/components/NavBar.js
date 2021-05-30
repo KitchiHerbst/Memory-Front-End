@@ -1,54 +1,44 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import "./NavBar.css";
 
 export const NavBar = (props) => {
   return (
     <div>
-      {/* <nav
-        id="nav-bar"
-        className="navbar sticky-top navbar-expand-lg navbar-light"
-        style={{ "background-color": "#e6f5e6" }}
-      >
-        <div className="container-fluid">
-          <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul>
-              <li>
-                <Link to="/home">Home</Link>
-              </li>
-              <li>
-                <Link to="/friendslist">Friends</Link>
-              </li>
-              <li>
-                  <Link to='/people'>Search</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav> */}
-
       <nav class="navbar navbar-expand-lg navbar-light secondary-color">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" style={{'color': '#fff'}} href="/home">
             MEMORY
           </a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse nav--right" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/home">
+                <a
+                  class="nav-link active nav--links"
+                  aria-current="page"
+                  href="/home"
+                  style={{'color': '#fff'}}
+                >
                   Home
                 </a>
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link active"
+                  class="nav-link active nav--links"
                   aria-current="page"
                   href="/friendslist"
+                  style={{'color': '#fff'}}
                 >
                   Friends
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/people">
+                <a
+                  class="nav-link active nav--links"
+                  aria-current="page"
+                  href="/people"
+                  style={{'color': '#fff'}}
+                >
                   Search
                 </a>
               </li>
@@ -59,3 +49,4 @@ export const NavBar = (props) => {
     </div>
   );
 };
+
