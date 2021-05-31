@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(190, 194, 194);
+  background-color: rgb(190, 194, 194) !important;
 }
 
 code {
@@ -79,7 +79,7 @@ code {
 .profile-picture {
   height: 300px;
   width: 300px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 
@@ -100,15 +100,6 @@ code {
 }
 
 
-.home-no-timeline {
-  display: flex;
-  justify-content: start;
-}
-
-.home-picture {
-  margin: 10px;
-
-}
 
 .home-user-info {
   margin: 10px;
@@ -167,8 +158,7 @@ code {
 
 
 .user-card {
-  display: flex;
-  justify-content: space-around;
+  max-width: 650px;
 }
 
 .user-container {

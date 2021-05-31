@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
+  Button,
+  Collapse,
+  Container,
+  Form,
+  Image,
+  Media,
+  Row,
+} from "react-bootstrap";
+import {
   BrowserRouter as Router,
   Switch,
   Route,
@@ -76,115 +85,108 @@ export const Home = (props) => {
   console.log(userTimeline);
   console.log(posts);
   return (
-    <div className="home">
-      <div className="home-no-timeline ">
-        <div class=" home-picture">
-          <img
+    <Container fluid className="container-main">
+      <Row className="mt-4 justify-content-flex-start">
+        <Media
+          className={
+            !toggleEdit
+              ? "user-card accent-color rounded-right"
+              : "user-card accent-color"
+          }
+        >
+          <Image
             src={user.profile_picture}
             alt="profile picture"
-            className="profile-picture"
+            roundedCircle
+            className="profile-picture mr-4 ml-2 mt-4 mb-4"
           />
-        </div>
-
-        <div className="home-user-info ">
-          <h5 class="card-title">
-            {user.first_name} {user.last_name}
-          </h5>
-          <p class="card-text">{user.email}</p>
-          <br />
-          <br />
-          <button
-            className="btn btn-warning col-12"
-            onClick={() => {
-              localStorage.clear();
-              props.dispatch({ type: "LOGOUT" });
-            }}
+          <Media.Body className="mt-4 text-light">
+            <h4>
+              {user.first_name} {user.last_name}
+            </h4>
+            <p>{user.email}</p>
+            <Button
+              className="col-11 btn-light mr-4 mt-4"
+              onClick={() => setToggleEdit(!toggleEdit)}
+            >
+              Edit Account
+            </Button>
+            <Button
+              className="col-11 btn-secondary mt-4"
+              onClick={() => {
+                localStorage.clear();
+                props.dispatch({ type: "LOGOUT" });
+              }}
+            >
+              Logout
+            </Button>
+            <Button
+              className="col-11 btn-danger mt-4"
+              onClick={() => deleteHandler()}
+            >
+              Delete Account
+            </Button>
+          </Media.Body>
+        </Media>
+        <Collapse in={toggleEdit}>
+          <Form
+            className='accent-color rounded-right'
+            style={{ "max-width": "325px" }}
+            onSubmit={(e) => editUserHandler(e)}
           >
-            Logout
-          </button>
-          <br />
-          <br />
-          <button
-            className="btn btn-secondary col-12"
-            onClick={() => setToggleEdit(!toggleEdit)}
-          >
-            Edit Account
-          </button>
-          <br />
-          <br />
-          <button
-            className="btn btn-danger col-12"
-            onClick={() => deleteHandler()}
-          >
-            Delete Account
-          </button>
-        </div>
-        <div className="home-edit-form ">
-          {toggleEdit ? (
-            <form onSubmit={(e) => editUserHandler(e)}>
-              <br />
-              <input
+            <Form.Group controlId="firstname">
+              <Form.Control
                 type="text"
                 placeholder="First Name"
-                value={user.first_name}
                 onChange={(e) =>
                   setUser({ ...user, first_name: e.target.value })
                 }
-                className="col-12"
+                className='mt-4 mr-4 col-11'
               />
-              <br />
-              <br />
+            </Form.Group>
 
-              <input
+            <Form.Group controlId="lastname">
+              <Form.Control
                 type="text"
                 placeholder="Last Name"
-                value={user.last_name}
                 onChange={(e) =>
                   setUser({ ...user, last_name: e.target.value })
                 }
-                className="col-12"
+                className='col-11'
               />
-
-              <br />
-              <br />
-              <input
-                type="text"
+            </Form.Group>
+            <Form.Group controlId="email">
+              <Form.Control
+                type="email"
                 placeholder="Email"
-                value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-                className="col-12"
+                className='col-11'
               />
-              <br />
-              <br />
-
-              <input
+            </Form.Group>
+            <Form.Group controlId="profilepicture">
+              <Form.Control
                 type="text"
                 placeholder="Profile Picture"
-                value={user.profile_picture}
                 onChange={(e) =>
                   setUser({ ...user, profile_picture: e.target.value })
                 }
-                className="col-12"
+                className='col-11'
               />
-              <br />
-              <br />
-
-              <input type="submit" className="btn btn-secondary col-12" />
-            </form>
-          ) : null}
-          {/* <select id="timeline-access" name="access">
-          <option>GLOBAL</option>
-          <option>FRIENDS</option>
-          <option>DISABLED</option>
-        </select>
-        <br />
-            */}
-        </div>
-      </div>
-      <div className="mt-4 mb-4">
+            </Form.Group>
+            <Button
+              variant="light"
+              type="submit"
+              className="btn-block mt-4 mb-4 col-11"
+            >
+              Submit
+            </Button>
+          </Form>
+        </Collapse>
+      </Row>
+      <Row>
         <Timeline timeline={userTimeline} posts={posts} />
-      </div>
+      </Row>
       {!props.redirect ? <Redirect to="/" /> : null}
-    </div>
+    </Container>
   );
 };

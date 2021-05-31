@@ -49,6 +49,7 @@ export const FriendPage = (props) => {
   }, friend);
 
   return (
+    
     <div className='friend-page'>
       <div className="mb-4 friend-page-no-timeline">
       <div class=" friend-picture">
