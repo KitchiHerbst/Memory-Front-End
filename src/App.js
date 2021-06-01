@@ -1,10 +1,10 @@
-import React, { Component, useEffect, useReducer, useState } from "react";
+import React, {useEffect, useReducer, useState } from "react";
 import { Login } from "./components/Login.js";
 import { Signup } from "./components/Signup.js";
 import { Home } from "./components/Home.js";
 import { FriendPage } from "./components/FriendPage"
 import {NavBar} from './components/NavBar'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {FriendsList} from "./components/FriendsList"
 import { UsersIndex} from "./components/UsersIndex"
 import "./index.css";

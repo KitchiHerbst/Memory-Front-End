@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { Container, Row } from "react-bootstrap";
 import { deleteFriend } from "../functions/DeleteFriend";
 import { UserCard } from "./UserCard";
 
@@ -8,9 +9,10 @@ export const FriendsList = (props) => {
     deleteFriend(friend.id);
   };
 
+  // console.log(props.friends)
   return (
-      <div className='users-index'>
-          <div className="user-container">
+    <Container fluid className="container-main">
+      <Row className="mt-4 mx-auto justify-content-md-center">
         {props.friends.map((friend) => (
           <UserCard
             user={friend}
@@ -18,7 +20,7 @@ export const FriendsList = (props) => {
             status={true}
           />
         ))}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };

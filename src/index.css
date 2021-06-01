@@ -18,31 +18,16 @@ code {
   background-color: rgb(190, 194, 194);
 }
 
-/* .login-dark {
-  max-width: 320px;
-  width: 90%;
-  background-color: #1e2833;
-  padding: 40px;
-  border-radius: 4px;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  color: #fff;
-  box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
-} */
 
 .accent-color {
   background-color: #1e2833 !important;
 }
 
-.nav--links {
-  color: #fff;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  height: 100%;
+.timeline-card {
+  width: 350px;
+  /* height: 550px; */
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .login-card {
@@ -62,15 +47,10 @@ code {
   font-size: 1.5em !important;
 }
 
-.custom--navbar {
-  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
 
-}
-
-
-/* .primary-color {
+.primary-color {
   background-color: rgb(165, 170, 170);
-} */
+}
 
 .border-test {
   border: 5px black solid !important;
@@ -82,92 +62,13 @@ code {
   /* border-radius: 5px; */
 }
 
-
-/* .main-login-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-
-} */
-
-
-.timeline-container {
-  height: 800px;
-  width: 100%;
-
-}
-
-
-
-.home-user-info {
-  margin: 10px;
-  width: 300px;
-}
-
-.home-edit-form {
-  margin: 10px;
-  width: 300px;
-}
-
-.home {
-  min-height: 100vh;
-}
-
-.friend-page {
-  min-height: 100vh;
-}
-
-.friend-page-no-timeline {
-  display: flex;
-  justify-content: start;
-}
-
-.friend-picture {
-  border-radius: 20px;
-  height: 200;
-  width: 200;
-  margin: 10px;
-}
-
-.friend-info {
-  margin: 10px;
-  width: 300px;
-}
-
-.post-form {
-  margin: 10px;
-  width: 300px;
-}
-
-/* User Card */
-
-.user-card-picture {
-  border-radius: 20px;
-  height: 200px;
-  width: 200px;
-}
-
-.users-index {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  align-content: space-between;
-}
-
-
 .user-card {
   max-width: 650px;
 }
 
-.user-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+.timeline-container {
+  height: 800px;
+  width: 100%;
 }
 
-.user-card-info {
-  width: 225px
-} 
 

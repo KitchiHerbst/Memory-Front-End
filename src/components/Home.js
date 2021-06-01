@@ -5,16 +5,12 @@ import {
   Container,
   Form,
   Image,
+  InputGroup,
   Media,
+  Modal,
   Row,
 } from "react-bootstrap";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Redirect } from "react-router-dom";
 import { Timeline } from "./Timeline";
 
 export const Home = (props) => {
@@ -22,6 +18,11 @@ export const Home = (props) => {
   const [toggleEdit, setToggleEdit] = useState(false);
   const [userTimeline, setUserTimeline] = useState({});
   const [posts, setPosts] = useState([]);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/get_user", {
@@ -45,7 +46,6 @@ export const Home = (props) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setUserTimeline(data.timeline);
         setPosts(data.posts);
       });
@@ -68,6 +68,7 @@ export const Home = (props) => {
   };
 
   const deleteHandler = () => {
+    handleClose();
     localStorage.clear();
     fetch(`http://localhost:3001/api/v1/users/${user.id}`, {
       method: "DELETE",
@@ -76,22 +77,35 @@ export const Home = (props) => {
     setToggleEdit(false);
   };
 
-  // const deletePost = () => {
+  const deletePost = (deletedPost) => {
+    console.log(deletedPost);
+    setPosts(posts.filter((obj) => obj.id !== deletedPost.id));
+    fetch(`http://localhost:3001/api/v1/posts/${deletedPost.id}`, {
+      method: "DELETE",
+    });
+  };
 
-  // }
+  const changeAccess = (e) => {
+    if (e.target.value !== "Change Timeline Access") {
+      fetch(`http://localhost:3001/api/v1/timelines/${userTimeline.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(e.target.value),
+      });
+    }
+  };
 
-  const changeAccess = () => {};
-
-  console.log(userTimeline);
-  console.log(posts);
   return (
     <Container fluid className="container-main">
-      <Row className="mt-4 justify-content-flex-start">
+      <Row className="mt-4 justify-content-flex-start ml-4">
         <Media
           className={
             !toggleEdit
-              ? "user-card accent-color rounded-right"
-              : "user-card accent-color"
+              ? "user-card accent-color rounded"
+              : "user-card accent-color rounded-left"
           }
         >
           <Image
@@ -106,23 +120,36 @@ export const Home = (props) => {
             </h4>
             <p>{user.email}</p>
             <Button
-              className="col-11 btn-light mr-4 mt-4"
+              className="col-11 btn-light mr-4 mb-4"
               onClick={() => setToggleEdit(!toggleEdit)}
             >
               Edit Account
             </Button>
+            <InputGroup>
+              <Form.Control
+                as="select"
+                className="col-11"
+                onChange={changeAccess}
+              >
+                <option>Change Timeline Access</option>
+                <option>Global</option>
+                <option>Friends</option>
+                <option>Private</option>
+              </Form.Control>
+            </InputGroup>
             <Button
               className="col-11 btn-secondary mt-4"
               onClick={() => {
                 localStorage.clear();
+                sessionStorage.clear();
                 props.dispatch({ type: "LOGOUT" });
               }}
             >
               Logout
             </Button>
             <Button
-              className="col-11 btn-danger mt-4"
-              onClick={() => deleteHandler()}
+              className="col-11 btn-danger mt-4 mb-4"
+              onClick={handleShow}
             >
               Delete Account
             </Button>
@@ -130,7 +157,7 @@ export const Home = (props) => {
         </Media>
         <Collapse in={toggleEdit}>
           <Form
-            className='accent-color rounded-right'
+            className="accent-color rounded-right"
             style={{ "max-width": "325px" }}
             onSubmit={(e) => editUserHandler(e)}
           >
@@ -141,7 +168,7 @@ export const Home = (props) => {
                 onChange={(e) =>
                   setUser({ ...user, first_name: e.target.value })
                 }
-                className='mt-4 mr-4 col-11'
+                className="mt-4 mr-4 col-11"
               />
             </Form.Group>
 
@@ -152,7 +179,7 @@ export const Home = (props) => {
                 onChange={(e) =>
                   setUser({ ...user, last_name: e.target.value })
                 }
-                className='col-11'
+                className="col-11"
               />
             </Form.Group>
             <Form.Group controlId="email">
@@ -160,7 +187,7 @@ export const Home = (props) => {
                 type="email"
                 placeholder="Email"
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-                className='col-11'
+                className="col-11"
               />
             </Form.Group>
             <Form.Group controlId="profilepicture">
@@ -170,7 +197,7 @@ export const Home = (props) => {
                 onChange={(e) =>
                   setUser({ ...user, profile_picture: e.target.value })
                 }
-                className='col-11'
+                className="col-11"
               />
             </Form.Group>
             <Button
@@ -184,9 +211,38 @@ export const Home = (props) => {
         </Collapse>
       </Row>
       <Row>
-        <Timeline timeline={userTimeline} posts={posts} />
+        {posts.length === 0 ? (
+          <h4>
+            {" "}
+            Oh No! there doesnt seem to be any posts on your timeline! Add
+            Friends so they can post on your timeline!
+          </h4>
+        ) : (
+          <Timeline
+            timeline={userTimeline}
+            posts={posts}
+            postHandler={deletePost}
+          />
+        )}
       </Row>
       {!props.redirect ? <Redirect to="/" /> : null}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>So you want to delete your account?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          You will be able to create a new account with your same email but your
+          timeline, posts, and friends will be lost.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            No I would like to stay
+          </Button>
+          <Button variant="danger" onClick={deleteHandler}>
+            Delete me Forever
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

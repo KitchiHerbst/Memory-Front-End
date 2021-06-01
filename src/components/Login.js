@@ -1,10 +1,10 @@
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
-import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Link, Redirect } from "react-router-dom";
 import "../index.css";
 import React, { useState } from "react";
 import { Card, Container, Row, Button, Form, Collapse } from "react-bootstrap";
-// import { Button } from "bootstrap";
+
 
 export const Login = (props) => {
   const [manualLogin, setManualLogin] = useState(false);
@@ -70,7 +70,7 @@ export const Login = (props) => {
                 appId="743947922947098"
                 autoLoad={true}
                 fields="name,email,picture"
-                // onClick={componentClicked}
+                // onClick={() => responseFacebook}
                 callback={responseFacebook}
                 cssClass="btn btn-light col-12 text-center mt-4"
               />
