@@ -128,7 +128,7 @@ export const Home = (props) => {
             <InputGroup>
               <Form.Control
                 as="select"
-                className="col-11"
+                className="col-11 text-center"
                 onChange={changeAccess}
               >
                 <option>Change Timeline Access</option>

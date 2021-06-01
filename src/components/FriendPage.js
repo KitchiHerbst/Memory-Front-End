@@ -7,9 +7,15 @@ import {
   Button,
   Collapse,
   Form,
+  Modal,
 } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { Timeline } from "./Timeline";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-places-autocomplete";
 
 export const FriendPage = (props) => {
   const [postForm, setPostForm] = useState(false);
@@ -18,6 +24,9 @@ export const FriendPage = (props) => {
   const [posts, setPosts] = useState([]);
   const location = useLocation();
   const { friend, status } = location.state;
+
+  const handleClose = () => setPostForm(false);
+  const handleShow = () => setPostForm(true);
 
   const submitHandler = (e) => {
     setPostForm(false);
@@ -68,6 +77,11 @@ export const FriendPage = (props) => {
     }
   };
 
+  const [address, setAddress] = useState("");
+  const handleSelect = async (value) => {
+    setAddress(value)
+  };
+
   return (
     <Container fluid className="container-main">
       <Row className="mt-4 justify-content-flex-start ml-4">
@@ -93,49 +107,14 @@ export const FriendPage = (props) => {
             {access ? (
               <Button
                 className="col-11 btn-light mt-4"
-                onClick={() => setPostForm(!postForm)}
+                onClick={handleShow}
               >
                 Post to {friend.first_name}'s timeline
               </Button>
             ) : null}
           </Media.Body>
         </Media>
-        <Collapse in={postForm}>
-          <Form
-            className="accent-color rounded-right"
-            style={{ "max-width": "325px" }}
-            onSubmit={submitHandler}
-          >
-            <Form.Group>
-              <Form.Control type="date" className="mt-4 col-11"></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                type="text"
-                className="mt-4 col-11"
-                placeholder="Location"
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                type="text"
-                className="mt-4 col-11"
-                placeholder="Picture"
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                className="mt-4 col-11 mb-4"
-                placeholder="Today we..."
-              ></Form.Control>
-            </Form.Group>
-            <Button type="submit" className="col-11 btn-light mb-4">
-              Post
-            </Button>
-          </Form>
-        </Collapse>
+
       </Row>
       <Row>
         {posts.length === 0 ? (
@@ -148,6 +127,91 @@ export const FriendPage = (props) => {
           <Timeline timeline={timeline} posts={posts} />
         )}
       </Row>
+
+      <Modal
+      show={postForm}
+      onHide={handleClose}
+      {...props}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      >
+      <Modal.Header closeButton >
+        <Modal.Title >
+          Post to {friend.first_name}'s Timeline
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body 
+      // className='accent-color'
+      >
+
+      <Form
+            className="mx-auto col-11"
+            // style={{ "max-width": "325px" }}
+            onSubmit={(e) => {
+              handleClose()
+              submitHandler(e)}}
+          >
+            <Form.Group>
+              <Form.Control type="date" className="mt-4 col-11" required></Form.Control>
+            </Form.Group>
+
+            <Form.Group>
+              {/* */}
+              <PlacesAutocomplete
+                value={address}
+                onChange={setAddress}
+                onSelect={handleSelect}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading,
+                }) => (
+                  <div>
+                    <Form.Control
+                      {...getInputProps({
+                        placeholder: "Location",
+                        className: "mt-4 col-11",
+                      })}
+                    ></Form.Control>
+                    <div>
+                      {loading ? <div>...loading</div> : null}
+                      {suggestions.map(suggestion => {
+                        const style = {
+                          backgroundColor: suggestion.active ? 'rgb(165, 170, 170, 0.5)' : 'white'
+                        }
+                        return <div className='col-11' {...getSuggestionItemProps(suggestion, {style})}>{suggestion.description}</div>
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Control
+                type="text"
+                className="mt-4 col-11"
+                placeholder="Picture"
+                
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                className="mt-4 col-11 mb-4"
+                placeholder="Today we..."
+                required
+              ></Form.Control>
+            </Form.Group>
+            <Button className='col-11 btn-dark mb-4' type='submit'>Post</Button>
+            </Form>
+      </Modal.Body>
+      
+    </Modal>
     </Container>
   );
 };
