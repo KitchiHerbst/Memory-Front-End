@@ -4,7 +4,7 @@ import { Signup } from "./components/Signup.js";
 import { Home } from "./components/Home.js";
 import { FriendPage } from "./components/FriendPage"
 import {NavBar} from './components/NavBar'
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {FriendsList} from "./components/FriendsList"
 import { UsersIndex} from "./components/UsersIndex"
 import "./index.css";
@@ -100,8 +100,8 @@ export function App() {
     // maybe    ...   || person.last_name.includes(arg)
     const searchedUsers = (arg) => {
       // console.log(arg)
-      setFilteredFriends(friends.filter(person => person.first_name.includes(arg) || person.last_name.includes(arg)))
-      setFilteredNotFriends(notFriends.filter(person => person.first_name.includes(arg) || person.last_name.includes(arg)))
+      setFilteredFriends(friends.filter(person => person.first_name.toLowerCase().includes(arg.toLowerCase()) || person.last_name.toLowerCase().includes(arg.toLowerCase())))
+      setFilteredNotFriends(notFriends.filter(person => person.first_name.toLowerCase().includes(arg.toLowerCase()) || person.last_name.toLowerCase().includes(arg.toLowerCase())))
     }
 
  

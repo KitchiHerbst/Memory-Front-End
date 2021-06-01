@@ -120,23 +120,24 @@ export const Signup = (props) => {
                 <Collapse in={manualSignup}>
                   <Form>
                     <Form.Group controlId="firstname">
-                      <Form.Control type="text" placeholder="First Name" />
+                      <Form.Control type="text" placeholder="First Name" required/>
                     </Form.Group>
 
                     <Form.Group controlId="lastname">
-                      <Form.Control type="text" placeholder="Last Name" />
+                      <Form.Control type="text" placeholder="Last Name" required/>
                     </Form.Group>
                     <Form.Group controlId="email">
-                      <Form.Control type="email" placeholder="Email" />
+                      <Form.Control type="email" placeholder="Email" required/>
                     </Form.Group>
 
                     <Form.Group controlId="password">
-                      <Form.Control type="password" placeholder="Password" />
+                      <Form.Control type="password" placeholder="Password" required/>
                     </Form.Group>
                     <Form.Group controlId="confirmpassword">
                       <Form.Control
                         type="password"
                         placeholder="Confirm Password"
+                        required
                       />
                     </Form.Group>
 

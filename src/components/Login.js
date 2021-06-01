@@ -1,6 +1,6 @@
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
-import { BrowserRouter as Link, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "../index.css";
 import React, { useState } from "react";
 import { Card, Container, Row, Button, Form, Collapse } from "react-bootstrap";
@@ -100,11 +100,11 @@ export const Login = (props) => {
               <Collapse in={manualLogin}>
                 <Form onSubmit={(e) => responseManual(e)}>
                   <Form.Group controlId="Email">
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control type="email" placeholder="Enter email" required/>
                   </Form.Group>
 
                   <Form.Group controlId="Password">
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control type="password" placeholder="Password" required/>
                   </Form.Group>
 
                   <Button

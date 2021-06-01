@@ -10,7 +10,7 @@ import {
   Modal,
   Row,
 } from "react-bootstrap";
-import { BrowserRouter as Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Timeline } from "./Timeline";
 
 export const Home = (props) => {

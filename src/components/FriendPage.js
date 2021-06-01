@@ -38,7 +38,6 @@ export const FriendPage = (props) => {
       text: e.target[3].value,
       timelineId: timeline.id,
     };
-    setPosts([...posts, post]);
     fetch("http://localhost:3001/api/v1/posts", {
       method: "POST",
       headers: {
@@ -52,19 +51,15 @@ export const FriendPage = (props) => {
       .then((createdPost) => console.log(createdPost));
   };
 
-  useEffect(
-    () => {
-      fetch(`http://localhost:3001/api/v1/friend_timeline/${friend.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setTimeline(data.timeline);
-          setPosts(data.posts);
-          allowPost(data.timeline.access);
-        });
-    },
-    friend,
-    posts
-  );
+  useEffect(() => {
+    fetch(`http://localhost:3001/api/v1/friend_timeline/${friend.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTimeline(data.timeline);
+        setPosts(data.posts);
+        allowPost(data.timeline.access);
+      });
+  }, [postForm]);
 
   const allowPost = (string) => {
     console.log(string);
@@ -79,7 +74,7 @@ export const FriendPage = (props) => {
 
   const [address, setAddress] = useState("");
   const handleSelect = async (value) => {
-    setAddress(value)
+    setAddress(value);
   };
 
   return (
@@ -105,16 +100,12 @@ export const FriendPage = (props) => {
             {/* <p>{numOfFriends} Friends</p> */}
             {/* <Button>{ friends? 'Friends' : 'Add Friend'}</Button> */}
             {access ? (
-              <Button
-                className="col-11 btn-light mt-4"
-                onClick={handleShow}
-              >
+              <Button className="col-11 btn-light mt-4" onClick={handleShow}>
                 Post to {friend.first_name}'s timeline
               </Button>
             ) : null}
           </Media.Body>
         </Media>
-
       </Row>
       <Row>
         {posts.length === 0 ? (
@@ -129,31 +120,33 @@ export const FriendPage = (props) => {
       </Row>
 
       <Modal
-      show={postForm}
-      onHide={handleClose}
-      {...props}
-      size="md"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
+        show={postForm}
+        onHide={handleClose}
+        {...props}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
-      <Modal.Header closeButton >
-        <Modal.Title >
-          Post to {friend.first_name}'s Timeline
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body 
-      // className='accent-color'
-      >
-
-      <Form
+        <Modal.Header closeButton>
+          <Modal.Title>Post to {friend.first_name}'s Timeline</Modal.Title>
+        </Modal.Header>
+        <Modal.Body
+        // className='accent-color'
+        >
+          <Form
             className="mx-auto col-11"
             // style={{ "max-width": "325px" }}
             onSubmit={(e) => {
-              handleClose()
-              submitHandler(e)}}
+              handleClose();
+              submitHandler(e);
+            }}
           >
             <Form.Group>
-              <Form.Control type="date" className="mt-4 col-11" required></Form.Control>
+              <Form.Control
+                type="date"
+                className="mt-4 col-11"
+                required
+              ></Form.Control>
             </Form.Group>
 
             <Form.Group>
@@ -178,11 +171,20 @@ export const FriendPage = (props) => {
                     ></Form.Control>
                     <div>
                       {loading ? <div>...loading</div> : null}
-                      {suggestions.map(suggestion => {
+                      {suggestions.map((suggestion) => {
                         const style = {
-                          backgroundColor: suggestion.active ? 'rgb(165, 170, 170, 0.5)' : 'white'
-                        }
-                        return <div className='col-11' {...getSuggestionItemProps(suggestion, {style})}>{suggestion.description}</div>
+                          backgroundColor: suggestion.active
+                            ? "rgb(165, 170, 170, 0.5)"
+                            : "white",
+                        };
+                        return (
+                          <div
+                            className="col-11"
+                            {...getSuggestionItemProps(suggestion, { style })}
+                          >
+                            {suggestion.description}
+                          </div>
+                        );
                       })}
                     </div>
                   </div>
@@ -195,7 +197,6 @@ export const FriendPage = (props) => {
                 type="text"
                 className="mt-4 col-11"
                 placeholder="Picture"
-                
               ></Form.Control>
             </Form.Group>
             <Form.Group>
@@ -207,11 +208,12 @@ export const FriendPage = (props) => {
                 required
               ></Form.Control>
             </Form.Group>
-            <Button className='col-11 btn-dark mb-4' type='submit'>Post</Button>
-            </Form>
-      </Modal.Body>
-      
-    </Modal>
+            <Button className="col-11 btn-dark mb-4" type="submit">
+              Post
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

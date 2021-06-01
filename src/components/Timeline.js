@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Modal } from "react-bootstrap";
 import { Chrono } from "react-chrono";
 
@@ -13,8 +13,15 @@ export const Timeline = (props) => {
       return { title: post.date };
     });
 
+  useEffect(() => {
+    titles = props.posts
+      .sort((a, b) => (a.date > b.date ? 1 : -1))
+      .map((post) => {
+        return { title: post.date };
+      });
+  }, [props.posts]);
 
-
+  
   return (
     <div className="mt-4 timeline-container">
       {props.posts !== [] ? (
@@ -23,7 +30,7 @@ export const Timeline = (props) => {
           mode="HORIZONTAL"
           cardPositionHorizontal="TOP"
           disableNavOnKey="true"
-          allowDynamicUpdate="true"
+          // allowDynamicUpdate="true"
           theme={{
             primary: "black",
             secondary: "white",
