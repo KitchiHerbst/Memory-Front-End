@@ -165,6 +165,7 @@ export const Home = (props) => {
               <Form.Control
                 type="text"
                 placeholder="First Name"
+                value={user.first_name}
                 onChange={(e) =>
                   setUser({ ...user, first_name: e.target.value })
                 }
@@ -176,6 +177,7 @@ export const Home = (props) => {
               <Form.Control
                 type="text"
                 placeholder="Last Name"
+                value={user.last_name}
                 onChange={(e) =>
                   setUser({ ...user, last_name: e.target.value })
                 }
@@ -186,6 +188,7 @@ export const Home = (props) => {
               <Form.Control
                 type="email"
                 placeholder="Email"
+                value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
                 className="col-11"
               />
@@ -193,6 +196,7 @@ export const Home = (props) => {
             <Form.Group controlId="profilepicture">
               <Form.Control
                 type="text"
+                value={user.profile_picture}
                 placeholder="Profile Picture"
                 onChange={(e) =>
                   setUser({ ...user, profile_picture: e.target.value })
