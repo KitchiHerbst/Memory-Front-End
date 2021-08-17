@@ -24,6 +24,7 @@ export const FriendPage = (props) => {
   const [posts, setPosts] = useState([]);
   const location = useLocation();
   const { friend, status } = location.state;
+  const [address, setAddress] = useState("");
 
   const handleClose = () => setPostForm(false);
   const handleShow = () => setPostForm(true);
@@ -47,8 +48,8 @@ export const FriendPage = (props) => {
       },
       body: JSON.stringify(post),
     })
-      .then((res) => res.json())
-      .then((createdPost) => console.log(createdPost));
+      // .then((res) => res.json())
+      // .then((createdPost) => console.log(createdPost));
   };
 
   useEffect(() => {
@@ -72,7 +73,7 @@ export const FriendPage = (props) => {
     }
   };
 
-  const [address, setAddress] = useState("");
+  
   const handleSelect = async (value) => {
     setAddress(value);
   };
@@ -109,10 +110,10 @@ export const FriendPage = (props) => {
       </Row>
       <Row>
         {posts.length === 0 ? (
-          <h4>
+          <h4 className='text-center mt-4'>
             {" "}
             Oh No! {friend.first_name} doesnt have any posts on their timeline,
-            be the first to post on theirs!
+            be the first to post!
           </h4>
         ) : (
           <Timeline timeline={timeline} posts={posts} />

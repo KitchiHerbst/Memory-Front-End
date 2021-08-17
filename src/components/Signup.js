@@ -118,7 +118,7 @@ export const Signup = (props) => {
                 Manual Signup
               </Button>
                 <Collapse in={manualSignup}>
-                  <Form>
+                  <Form onSubmit={submitHandler}>
                     <Form.Group controlId="firstname">
                       <Form.Control type="text" placeholder="First Name" required/>
                     </Form.Group>

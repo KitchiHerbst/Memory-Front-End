@@ -21,7 +21,8 @@ export const Timeline = (props) => {
       });
   }, [props.posts]);
 
-  
+  console.log(titles)
+  console.log(props.posts)
   return (
     <div className="mt-4 timeline-container">
       {props.posts !== [] ? (
@@ -30,7 +31,7 @@ export const Timeline = (props) => {
           mode="HORIZONTAL"
           cardPositionHorizontal="TOP"
           disableNavOnKey="true"
-          // allowDynamicUpdate="true"
+          allowDynamicUpdate="true"
           theme={{
             primary: "black",
             secondary: "white",

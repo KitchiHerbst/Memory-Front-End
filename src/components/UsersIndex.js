@@ -40,26 +40,16 @@ export const UsersIndex = (props) => {
             friendshipHandler={addFriendHandler}
             status={false}
           />
-        ))}
-      </Row>
-      <Row className="mt-4 mx-auto justify-content-md-center mb-4">
-        {props.friends.map((person) => (
-          <UserCard
-            user={person}
-            friendshipHandler={removeFriendHandler}
-            status={true}
-          />
-        ))}
+          ))}
+          {props.friends.map((person) => (
+            <UserCard
+              user={person}
+              friendshipHandler={removeFriendHandler}
+              status={true}
+            />
+          ))}
       </Row>
     </Container>
-    // <div className='users-index'>
-    //     <hr/>
-    //     <input type='text' onChange={(e) => props.search(e.target.value)} placeholder='Search' className='users-search col-3'/>
-    //     <hr/>
-    //     <div className='user-container'>
-    //     {props.notFriends.map(person => <UserCard user={person} friendshipHandler={addFriendHandler} status={false}/>)}
-    //     {props.friends.map(person => <UserCard user={person} friendshipHandler={removeFriendHandler} status={true}/>)}
-    //     </div>
-    // </div>
+  
   );
 };

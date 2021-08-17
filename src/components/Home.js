@@ -216,10 +216,10 @@ export const Home = (props) => {
       </Row>
       <Row>
         {posts.length === 0 ? (
-          <h4>
+          <h4 className='text-center mt-4'>
             {" "}
-            Oh No! there doesnt seem to be any posts on your timeline! Add
-            Friends so they can post on your timeline!
+            Oh No! There doesnt seem to be any posts on your timeline, add
+            friends so they can post on your timeline!
           </h4>
         ) : (
           <Timeline

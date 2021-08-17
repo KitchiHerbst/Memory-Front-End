@@ -70,7 +70,7 @@ export const Login = (props) => {
                 appId="743947922947098"
                 autoLoad={true}
                 fields="name,email,picture"
-                // onClick={() => responseFacebook}
+                // onClick={componentClicked}
                 callback={responseFacebook}
                 cssClass="btn btn-light col-12 text-center mt-4"
               />

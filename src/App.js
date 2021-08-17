@@ -30,7 +30,6 @@ export function App() {
       case "LOGIN":
         return {...state, loggedIn: true };
       case "LOGOUT":
-        // logout()
         return {...state, loggedIn: false };
       case "SIGNED UP":
         return {...state, loggedIn: true}
