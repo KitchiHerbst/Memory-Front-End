@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(190, 194, 194) !important;
 }
 
 code {
@@ -12,10 +13,62 @@ code {
     monospace;
 }
 
-.login-signup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+.container-main {
+  min-height: 100vh;
+  background-color: rgb(190, 194, 194);
 }
+
+
+.accent-color {
+  background-color: #1e2833 !important;
+}
+
+.timeline-card {
+  width: 350px;
+  /* height: 550px; */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.login-card {
+  width: 20%;
+  background-color: #1e2833 !important; 
+  color: #fff;
+  padding: 10px;
+  box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
+  
+}
+
+.login-title {
+  font-size: 4em !important;
+}
+
+.login-prompt {
+  font-size: 1.5em !important;
+}
+
+
+.primary-color {
+  background-color: rgb(165, 170, 170);
+}
+
+.border-test {
+  border: 5px black solid !important;
+}
+
+.profile-picture {
+  height: 300px;
+  width: 300px;
+  /* border-radius: 5px; */
+}
+
+.user-card {
+  max-width: 650px;
+}
+
+.timeline-container {
+  height: 800px;
+  width: 100%;
+}
+
+
